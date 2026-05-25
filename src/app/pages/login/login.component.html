@@ -1,1 +1,63 @@
-<p>login works!</p>
+<div class="login-wrapper">
+  <div class="login-left">
+    <div class="brand">
+      <h1>CCL Inventario</h1>
+      <p>Sistema de Gestión de Inventario</p>
+    </div>
+    <div class="features">
+      <div class="feature">
+        <span>✅</span> Control de entradas y salidas
+      </div>
+      <div class="feature">
+        <span>✅</span> Consulta en tiempo real
+      </div>
+      <div class="feature">
+        <span>✅</span> Acceso seguro con JWT
+      </div>
+    </div>
+  </div>
+
+  <div class="login-right">
+    <div class="login-card">
+      <div class="login-header">
+        <h2>Bienvenido</h2>
+        <p>Ingresa tus credenciales para acceder</p>
+      </div>
+
+      <div class="form-group">
+        <label>Usuario</label>
+        <div class="input-wrapper">
+          <span class="input-icon">👤</span>
+          <input
+            type="text"
+            [(ngModel)]="credentials.username"
+            placeholder="Ingresa tu usuario"
+            [disabled]="loading"
+          />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Contraseña</label>
+        <div class="input-wrapper">
+          <span class="input-icon">🔒</span>
+          <input
+            type="password"
+            [(ngModel)]="credentials.password"
+            placeholder="Ingresa tu contraseña"
+            [disabled]="loading"
+          />
+        </div>
+      </div>
+
+      <div class="error-message" *ngIf="errorMessage">
+        ⚠️ {{ errorMessage }}
+      </div>
+
+      <button class="btn-login" (click)="onLogin()" [disabled]="loading">
+        <span *ngIf="!loading">Iniciar Sesión →</span>
+        <span *ngIf="loading">Verificando...</span>
+      </button>
+    </div>
+  </div>
+</div>

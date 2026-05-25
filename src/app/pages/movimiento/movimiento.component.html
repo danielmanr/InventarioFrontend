@@ -1,1 +1,56 @@
-<p>movimiento works!</p>
+<div class="movimiento-container">
+  <div class="header">
+    <button class="btn-volver" (click)="volver()">← Volver</button>
+    <h2>Registrar Movimiento</h2>
+  </div>
+
+  <div class="card">
+    <div class="form-group">
+      <label>Producto</label>
+      <select [(ngModel)]="movimiento.productoId" [disabled]="loadingProductos">
+        <option [value]="0">Selecciona un producto</option>
+        <option *ngFor="let producto of productos" [value]="producto.id">
+          {{ producto.nombre }} (Stock: {{ producto.cantidad }})
+        </option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Tipo de movimiento</label>
+      <div class="tipo-buttons">
+        <button
+          [class]="movimiento.tipo === 'entrada' ? 'btn-tipo active-entrada' : 'btn-tipo'"
+          (click)="movimiento.tipo = 'entrada'">
+          ↑ Entrada
+        </button>
+        <button
+          [class]="movimiento.tipo === 'salida' ? 'btn-tipo active-salida' : 'btn-tipo'"
+          (click)="movimiento.tipo = 'salida'">
+          ↓ Salida
+        </button>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Cantidad</label>
+      <input
+        type="number"
+        [(ngModel)]="movimiento.cantidad"
+        min="1"
+        [disabled]="loading"
+      />
+    </div>
+
+    <div class="success-message" *ngIf="successMessage">
+      ✅ {{ successMessage }}
+    </div>
+
+    <div class="error-message" *ngIf="errorMessage">
+      ❌ {{ errorMessage }}
+    </div>
+
+    <button class="btn-registrar" (click)="registrar()" [disabled]="loading">
+      {{ loading ? 'Registrando...' : 'Registrar Movimiento' }}
+    </button>
+  </div>
+</div>
