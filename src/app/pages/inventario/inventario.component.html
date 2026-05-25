@@ -1,1 +1,72 @@
-<p>inventario works!</p>
+<div class="inventario-container">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <h1>CCL Inventario</h1>
+    </div>
+    <div class="navbar-actions">
+      <button class="btn-movimiento" (click)="irAMovimiento()">
+        + Registrar Movimiento
+      </button>
+      <button class="btn-logout" (click)="cerrarSesion()">
+        Cerrar Sesión
+      </button>
+    </div>
+  </nav>
+
+  <div class="content">
+    <div class="page-title">
+      <h2>Estado del Inventario</h2>
+      <p>Consulta el stock actual de todos los productos</p>
+    </div>
+
+    <div class="stats-row" *ngIf="productos.length > 0">
+      <div class="stat-card">
+        <div class="stat-label">Total Productos</div>
+        <div class="stat-value">{{ productos.length }}</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Total Unidades</div>
+        <div class="stat-value">{{ productos | json | slice:0:0 }}{{ getTotalUnidades() }}</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Stock Bajo</div>
+        <div class="stat-value">{{ getStockBajo() }}</div>
+      </div>
+    </div>
+
+    <div class="table-card">
+      <div class="table-header">
+        <h3>Lista de Productos</h3>
+        <button class="btn-refresh" (click)="cargarInventario()">↻ Actualizar</button>
+      </div>
+
+      <div class="loading" *ngIf="loading">Cargando inventario...</div>
+      <div class="error-message" *ngIf="errorMessage">{{ errorMessage }}</div>
+
+      <table *ngIf="!loading && productos.length > 0">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Producto</th>
+            <th>Stock Actual</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let producto of productos">
+            <td>{{ producto.id }}</td>
+            <td>{{ producto.nombre }}</td>
+            <td>
+              <span [class]="producto.cantidad > 5 ? 'stock-ok' : 'stock-bajo'">
+                {{ producto.cantidad }} uds
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="empty" *ngIf="!loading && productos.length === 0">
+        No hay productos registrados.
+      </div>
+    </div>
+  </div>
+</div>
